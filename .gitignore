@@ -12,6 +12,16 @@ data/
 *.xls
 *.json
 
+### GENERATED REPORT OUTPUTS ###
+reports/figures/*
+!reports/figures/.gitkeep
+
+reports/tables/*
+!reports/tables/.gitkeep
+
+models/*
+!models/.gitkeep
+
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
