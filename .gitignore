@@ -6,11 +6,10 @@ literature/
 references/
 
 ### DATA SAFETY ###
-data/
-*.csv
-*.xlsx
-*.xls
-*.json
+# Ignore everything in data/ EXCEPT mock_data
+data/*
+!data/mock_data/
+!data/mock_data/**
 
 ### GENERATED REPORT OUTPUTS ###
 reports/figures/*
