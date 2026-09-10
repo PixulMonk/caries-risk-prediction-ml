@@ -1,14 +1,26 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python
-# Edit at https://www.toptal.com/developers/gitignore?templates=python
+# Edit at https://www.toptal.com/developers/gitignore/?templates=python
 
 ### LOCAL FILES ###
 literature/
 references/
 
 ### DATA SAFETY ###
-# Ignore everything in data/ EXCEPT mock_data
-data/*
+# 1. Ignore everything inside data/ and its subdirectories
+data/**
+
+# 2. Re-include directory structures (allows Git to walk into them)
+!data/raw/
+!data/interim/
+!data/processed/
 !data/mock_data/
+
+# 3. Allow only .gitkeep files to be tracked in real data folders
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+
+# 4. Allow all mock/synthetic dataset files
 !data/mock_data/**
 
 ### GENERATED REPORT OUTPUTS ###
@@ -18,8 +30,15 @@ reports/figures/*
 reports/tables/*
 !reports/tables/.gitkeep
 
+### TRAINED MODELS ###
 models/*
 !models/.gitkeep
+
+### LOCAL ENVIRONMENT / JUPYTER ###
+.env
+*.env
+.ipynb_checkpoints/
+.DS_Store
 
 
 ### Python ###
