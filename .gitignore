@@ -1,44 +1,53 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore/?templates=python
 
-### LOCAL FILES ###
-literature/
-references/
+# Edit at https://www.toptal.com/developers/gitignore/?templates=python,node
 
-### DATA SAFETY ###
-# 1. Ignore everything inside data/ and its subdirectories
-data/**
+### LOCAL FILES ###
+ml/literature/
+ml/references/
+
+### DATA SAFETY (ML) ###
+# 1. Ignore everything inside ml/data/ and its subdirectories
+ml/data/**
 
 # 2. Re-include directory structures (allows Git to walk into them)
-!data/raw/
-!data/interim/
-!data/processed/
-!data/mock_data/
+!ml/data/raw/
+!ml/data/interim/
+!ml/data/processed/
+!ml/data/mock_data/
 
 # 3. Allow only .gitkeep files to be tracked in real data folders
-!data/raw/.gitkeep
-!data/interim/.gitkeep
-!data/processed/.gitkeep
+!ml/data/raw/.gitkeep
+!ml/data/interim/.gitkeep
+!ml/data/processed/.gitkeep
 
 # 4. Allow all mock/synthetic dataset files
-!data/mock_data/**
+!ml/data/mock_data/**
 
 ### GENERATED REPORT OUTPUTS ###
-reports/figures/*
-!reports/figures/.gitkeep
+ml/reports/figures/*
+!ml/reports/figures/.gitkeep
 
-reports/tables/*
-!reports/tables/.gitkeep
+ml/reports/tables/*
+!ml/reports/tables/.gitkeep
 
 ### TRAINED MODELS ###
-models/*
-!models/.gitkeep
+ml/models/*
+!ml/models/.gitkeep
 
-### LOCAL ENVIRONMENT / JUPYTER ###
+### ENVIRONMENTS & VENV ###
 .env
 *.env
+**/.venv/
+**/node_modules/
+**/dist/
+
+### JUPYTER & OS ###
 .ipynb_checkpoints/
 .DS_Store
+*.pyc
+__pycache__/
 
 
 ### Python ###
