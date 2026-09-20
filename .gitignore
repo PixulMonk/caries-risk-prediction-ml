@@ -36,6 +36,10 @@ ml/reports/tables/*
 ml/models/*
 !ml/models/.gitkeep
 
+### SERVER MODEL ARTIFACTS ###
+apps/server/artifacts/*
+!apps/server/artifacts/.gitkeep
+
 ### ENVIRONMENTS & VENV ###
 .env
 *.env
