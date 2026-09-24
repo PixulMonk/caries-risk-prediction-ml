@@ -5,26 +5,32 @@
 :root {
   color-scheme: light;
 
-  /* shadcn/ui tokens, mapped to the clinical palette (not shadcn's
-     default zinc theme). Plain hex, not hsl(), so these are usable
-     directly without the usual hsl()-wrapping Tailwind config. */
-  --background: #fafaf7; /* paper */
-  --foreground: #1c2321; /* ink */
-  --card: #ffffff;
-  --card-foreground: #1c2321;
-  --primary: #1f5f5b; /* teal */
-  --primary-foreground: #fafaf7;
-  --secondary: #efede7; /* slate-light */
-  --secondary-foreground: #1c2321;
-  --muted: #efede7;
-  --muted-foreground: #8b8578; /* slate */
-  --accent: #e7f0ef; /* teal-light */
-  --accent-foreground: #154442; /* teal-dark */
-  --destructive: #c17817; /* amber — used for elevated risk, not error red */
-  --destructive-foreground: #fafaf7;
-  --border: rgba(139, 133, 120, 0.35);
-  --input: rgba(139, 133, 120, 0.4);
-  --ring: #1f5f5b;
+  /* Eye-friendly Zinc & Slate Canvas */
+  --background: #f4f4f5; /* Zinc 100 - low-glare, cool neutral */
+  --foreground: #09090b; /* Zinc 950 - high contrast readability */
+  --card: #ffffff; /* Elevated card surface */
+  --card-foreground: #09090b;
+
+  /* OLFU Brand Identity (Green & Gold) */
+  --primary: #006837; /* OLFU Green */
+  --primary-foreground: #ffffff;
+
+  --secondary: #e4e4e7; /* Zinc 200 - track & toggle fills */
+  --secondary-foreground: #18181b;
+
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a; /* Zinc 500 - labels & captions */
+
+  --accent: #e6f4ea; /* Light mint tint for field focus/selection */
+  --accent-foreground: #006837;
+
+  /* OLFU Gold/Amber - used for risk levels & high-priority alerts */
+  --destructive: #d97706; /* OLFU Gold */
+  --destructive-foreground: #ffffff;
+
+  --border: #e4e4e7; /* Zinc 200 - crisp 1px borders */
+  --input: #d4d4d8; /* Zinc 300 - form field outlines */
+  --ring: #006837; /* Focus ring matches OLFU Green */
   --radius: 0.5rem;
 }
 
@@ -33,15 +39,15 @@
 }
 
 ::selection {
-  background-color: #1f5f5b;
-  color: #fafaf7;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
 }
 
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 button:focus-visible {
-  outline: 2px solid #1f5f5b;
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 

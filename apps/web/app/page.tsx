@@ -30,10 +30,10 @@ export default function Home() {
     <main className="min-h-screen">
       <header className="border-b border-border bg-card">
         <div className="mx-auto max-w-6xl px-6 py-6">
-          <p className="font-mono text-xs text-primary tracking-wide mb-1">
-            Caries risk assessment
+          <p className="font-sans text-xs text-primary tracking-wide mb-1">
+            Caries Risk Prediction System
           </p>
-          <h1 className="font-serif text-2xl text-foreground">
+          <h1 className="font-sans text-2xl text-foreground">
             General patient assessment
           </h1>
         </div>
