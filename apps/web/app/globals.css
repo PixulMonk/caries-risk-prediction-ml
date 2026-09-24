@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+
+  /* Eye-friendly Zinc & Slate Canvas */
+  --background: #f4f4f5; /* Zinc 100 - low-glare, cool neutral */
+  --foreground: #09090b; /* Zinc 950 - high contrast readability */
+  --card: #ffffff; /* Elevated card surface */
+  --card-foreground: #09090b;
+
+  /* OLFU Brand Identity (Green & Gold) */
+  --primary: #006837; /* OLFU Green */
+  --primary-foreground: #ffffff;
+
+  --secondary: #e4e4e7; /* Zinc 200 - track & toggle fills */
+  --secondary-foreground: #18181b;
+
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a; /* Zinc 500 - labels & captions */
+
+  --accent: #e6f4ea; /* Light mint tint for field focus/selection */
+  --accent-foreground: #006837;
+
+  /* OLFU Gold/Amber - used for risk levels & high-priority alerts */
+  --destructive: #d97706; /* OLFU Gold */
+  --destructive-foreground: #ffffff;
+
+  --border: #e4e4e7; /* Zinc 200 - crisp 1px borders */
+  --input: #d4d4d8; /* Zinc 300 - form field outlines */
+  --ring: #006837; /* Focus ring matches OLFU Green */
+  --radius: 0.5rem;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
