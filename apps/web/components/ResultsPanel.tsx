@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { PredictionResponse } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { CalculatingLoader } from "@/components/ui/calculating-loader";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -15,18 +15,20 @@ function ProbabilityGauge({ probability }: { probability: number }) {
   const pct = Math.round(probability * 100);
   const isHigh = probability >= 0.5;
   return (
-    <div>
-      <div className="flex items-end justify-between mb-1.5">
-        <span className="font-mono text-3xl text-foreground">{pct}%</span>
-        <span className="text-xs text-muted-foreground mb-1">
-          predicted risk
+    <div className="space-y-1.5">
+      <div className="flex items-baseline justify-between">
+        <span className="text-3xl font-bold tracking-tight text-foreground">
+          {pct}%
+        </span>
+        <span className="text-xs font-medium text-muted-foreground">
+          Predicted Risk Score
         </span>
       </div>
-      <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
+      <div className="h-2.5 w-full rounded-full bg-secondary overflow-hidden">
         <div
           className={cn(
-            "h-full rounded-full",
-            isHigh ? "bg-destructive" : "bg-primary"
+            "h-full rounded-full transition-all duration-500",
+            isHigh ? "bg-destructive" : "bg-primary",
           )}
           style={{ width: `${pct}%` }}
         />
@@ -45,25 +47,27 @@ function FeatureBar({
   direction: "increases" | "decreases";
 }) {
   const pct = Math.round(magnitude * 100);
+  const isIncrease = direction === "increases";
   return (
-    <div>
-      <div className="flex items-center justify-between text-xs mb-1">
-        <span className="text-foreground">{label}</span>
+    <div className="space-y-1">
+      <div className="flex items-center justify-between text-xs">
+        <span className="font-medium text-foreground">{label}</span>
         <span
-          className={
-            direction === "increases" ? "text-destructive" : "text-primary"
-          }
+          className={cn(
+            "font-semibold text-[11px]",
+            isIncrease ? "text-destructive" : "text-primary",
+          )}
         >
-          {direction === "increases" ? "↑ risk" : "↓ risk"}
+          {isIncrease ? "↑ raises risk" : "↓ lowers risk"}
         </span>
       </div>
-      <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
+      <div className="h-1.5 w-full rounded-full bg-secondary overflow-hidden">
         <div
           className={cn(
-            "h-full rounded-full",
-            direction === "increases" ? "bg-destructive" : "bg-primary"
+            "h-full rounded-full transition-all",
+            isIncrease ? "bg-destructive" : "bg-primary",
           )}
-          style={{ width: `${Math.max(pct, 6)}%` }}
+          style={{ width: `${Math.max(pct, 8)}%` }}
         />
       </div>
     </div>
@@ -71,18 +75,13 @@ function FeatureBar({
 }
 
 export default function ResultsPanel({ result, isLoading }: Props) {
-  const [explainMode, setExplainMode] = useState<"plain" | "clinical">(
-    "plain"
-  );
+  const [explainMode, setExplainMode] = useState<"plain" | "clinical">("plain");
 
   if (isLoading) {
     return (
-      <Card>
-        <CardContent className="p-6">
-          <p className="font-serif text-lg text-foreground mb-2">
-            Assessing…
-          </p>
-          <div className="h-2 w-2/3 rounded-full bg-muted animate-pulse" />
+      <Card className="border border-border shadow-xs bg-card/60">
+        <CardContent className="p-8">
+          <CalculatingLoader label="Calculating prediction…" />
         </CardContent>
       </Card>
     );
@@ -90,14 +89,14 @@ export default function ResultsPanel({ result, isLoading }: Props) {
 
   if (!result) {
     return (
-      <Card className="border-dashed">
+      <Card className="border-dashed border-border bg-card/50 shadow-xs">
         <CardContent className="p-6">
-          <p className="font-serif text-lg text-foreground mb-1.5">
+          <p className="font-sans text-base font-semibold text-foreground mb-1">
             Awaiting assessment
           </p>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Complete the form and submit to generate a caries risk prediction
-            for this patient.
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Complete the patient form and submit to generate a caries risk
+            prediction and feature breakdown.
           </p>
         </CardContent>
       </Card>
@@ -107,28 +106,29 @@ export default function ResultsPanel({ result, isLoading }: Props) {
   const isHigh = result.label === "High";
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden border border-border shadow-xs">
+      {/* Header Banner */}
       <div
         className={cn(
-          "px-6 py-5",
-          isHigh ? "bg-destructive/10" : "bg-accent"
+          "px-6 py-4 border-b border-border",
+          isHigh ? "bg-destructive/10" : "bg-primary/10",
         )}
       >
-        <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
-          Caries risk classification
+        <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-0.5">
+          Caries Risk Classification
         </p>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <h2
             className={cn(
-              "font-serif text-2xl",
-              isHigh ? "text-destructive" : "text-accent-foreground"
+              "font-sans text-2xl font-bold tracking-tight",
+              isHigh ? "text-destructive" : "text-primary",
             )}
           >
-            {result.label} risk
+            {result.label} Risk
           </h2>
           {result.isBorderline && (
-            <span className="text-xs rounded-full border border-border px-2 py-0.5 text-muted-foreground">
-              borderline
+            <span className="text-[10px] font-semibold uppercase tracking-wider rounded-full border border-border bg-card px-2 py-0.5 text-muted-foreground">
+              Borderline
             </span>
           )}
         </div>
@@ -137,32 +137,50 @@ export default function ResultsPanel({ result, isLoading }: Props) {
       <CardContent className="p-6 space-y-6">
         <ProbabilityGauge probability={result.probability} />
 
+        {/* Feature Importance Section */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-medium text-foreground">
-              Most influential factors
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Most Influential Factors
             </h3>
-            <div className="flex text-xs rounded-md border border-border overflow-hidden">
-              <Button
+
+            {/* Pill Segmented Control */}
+            <div
+              role="radiogroup"
+              aria-label="Explanation Mode"
+              className="inline-flex rounded-md border border-border bg-muted/50 p-0.5 text-xs"
+            >
+              <button
                 type="button"
-                variant={explainMode === "plain" ? "default" : "ghost"}
-                size="sm"
-                className="rounded-none h-auto py-1 px-2.5"
+                role="radio"
+                aria-checked={explainMode === "plain"}
                 onClick={() => setExplainMode("plain")}
+                className={cn(
+                  "px-2.5 py-0.5 font-medium rounded-xs transition-all text-xs",
+                  explainMode === "plain"
+                    ? "bg-card text-foreground shadow-xs font-semibold"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
               >
                 Plain
-              </Button>
-              <Button
+              </button>
+              <button
                 type="button"
-                variant={explainMode === "clinical" ? "default" : "ghost"}
-                size="sm"
-                className="rounded-none h-auto py-1 px-2.5"
+                role="radio"
+                aria-checked={explainMode === "clinical"}
                 onClick={() => setExplainMode("clinical")}
+                className={cn(
+                  "px-2.5 py-0.5 font-medium rounded-xs transition-all text-xs",
+                  explainMode === "clinical"
+                    ? "bg-card text-foreground shadow-xs font-semibold"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
               >
                 Clinical
-              </Button>
+              </button>
             </div>
           </div>
+
           <div className="space-y-3">
             {result.topFeatures.map((f) => (
               <FeatureBar
@@ -175,15 +193,16 @@ export default function ResultsPanel({ result, isLoading }: Props) {
           </div>
         </div>
 
+        {/* Recommendations */}
         <div>
-          <h3 className="text-sm font-medium text-foreground mb-2">
-            Suggested next steps
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2.5">
+            Suggested Next Steps
           </h3>
-          <ul className="space-y-1.5">
+          <ul className="space-y-2">
             {result.recommendations.map((r, i) => (
               <li
                 key={i}
-                className="text-sm text-foreground/80 leading-snug pl-3 border-l-2 border-primary/40"
+                className="text-xs text-foreground leading-relaxed pl-3 border-l-2 border-primary"
               >
                 {r}
               </li>
@@ -191,20 +210,29 @@ export default function ResultsPanel({ result, isLoading }: Props) {
           </ul>
         </div>
 
-        <div className="grid grid-cols-4 gap-2 pt-1 border-t border-border">
-          {(["d", "m", "f", "total"] as const).map((k) => (
-            <div key={k} className="text-center pt-3">
-              <p className="font-mono text-lg text-foreground">
-                {result.dmft[k]}
+        {/* DMFT Metric Grid */}
+        <div className="grid grid-cols-4 gap-2 pt-2 border-t border-border">
+          {(
+            [
+              { key: "d", label: "Decayed (D)" },
+              { key: "m", label: "Missing (M)" },
+              { key: "f", label: "Filled (F)" },
+              { key: "total", label: "DMFT Total" },
+            ] as const
+          ).map(({ key, label }) => (
+            <div key={key} className="text-center">
+              <p className="text-base font-bold text-foreground">
+                {result.dmft[key]}
               </p>
-              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
-                {k}
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                {label}
               </p>
             </div>
           ))}
         </div>
 
-        <p className="text-xs text-muted-foreground leading-relaxed border-t border-border pt-3">
+        {/* Footnote */}
+        <p className="text-[11px] text-muted-foreground leading-normal border-t border-border pt-3">
           {result.modelNote}
         </p>
       </CardContent>
