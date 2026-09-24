@@ -205,6 +205,12 @@ export const FORM_SCHEMA: FieldConfig[] = [
     type: "boolean",
     section: "C",
   },
+  {
+    key: "xerostomic_medications",
+    label: "Xerostomic medications present",
+    type: "boolean",
+    section: "C",
+  },
 
   // SECTION D — Clinical Findings
   {
@@ -308,9 +314,4 @@ export const SECTION_TITLES: Record<string, string> = {
   D: "Clinical findings",
 };
 
-export const SECTION_ORDER: Array<"A" | "B" | "C" | "D"> = [
-  "A",
-  "B",
-  "C",
-  "D",
-];
+export const SECTION_ORDER: Array<"A" | "B" | "C" | "D"> = ["A", "B", "C", "D"];

@@ -31,11 +31,11 @@ export default function AssessmentForm({
         return (
           <fieldset key={sectionKey}>
             <legend className="w-full">
-              <div className="flex items-baseline gap-3 border-b border-border pb-2 mb-5">
-                <span className="font-mono text-xs text-primary tracking-wide">
+              <div className="flex items-center gap-2.5 border-b border-border pb-2.5 mb-5">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
                   {sectionKey}
                 </span>
-                <h2 className="font-serif text-lg text-foreground">
+                <h2 className="font-sans text-base font-semibold text-foreground tracking-tight">
                   {SECTION_TITLES[sectionKey]}
                 </h2>
               </div>
@@ -48,7 +48,11 @@ export default function AssessmentForm({
                     field.type === "checkboxGroup" ? "sm:col-span-2" : ""
                   }
                 >
-                  <FormField field={field} values={values} onChange={onChange} />
+                  <FormField
+                    field={field}
+                    values={values}
+                    onChange={onChange}
+                  />
                 </div>
               ))}
             </div>
@@ -57,7 +61,11 @@ export default function AssessmentForm({
       })}
 
       <div className="pt-2">
-        <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full sm:w-auto"
+        >
           {isSubmitting ? "Assessing…" : "Assess caries risk"}
         </Button>
       </div>

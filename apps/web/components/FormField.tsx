@@ -63,7 +63,7 @@ export default function FormField({ field, values, onChange }: Props) {
           onChange={(e) =>
             onChange(
               field.key,
-              e.target.value === "" ? undefined : Number(e.target.value)
+              e.target.value === "" ? undefined : Number(e.target.value),
             )
           }
         />
@@ -101,17 +101,37 @@ export default function FormField({ field, values, onChange }: Props) {
   }
 
   if (field.type === "boolean") {
-    const checked = value === true;
+    // Treat undefined/null as false by default, or explicitly check equality
+    const isYes = value === true;
+    const isNo = value === false;
+
     return (
-      <div className="flex items-center gap-2.5 py-1">
-        <Checkbox
-          id={field.key}
-          checked={checked}
-          onCheckedChange={(c) => onChange(field.key, c === true)}
-        />
-        <Label htmlFor={field.key} className="font-normal cursor-pointer">
-          {field.label}
-        </Label>
+      <div>
+        <Label className="mb-1.5 block">{field.label}</Label>
+        <div className="grid grid-cols-2 gap-1 rounded-md border border-input bg-muted/50 p-1">
+          <button
+            type="button"
+            onClick={() => onChange(field.key, false)}
+            className={`rounded-sm py-1.5 text-xs font-medium transition-all ${
+              isNo
+                ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            No
+          </button>
+          <button
+            type="button"
+            onClick={() => onChange(field.key, true)}
+            className={`rounded-sm py-1.5 text-xs font-medium transition-all ${
+              isYes
+                ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Yes
+          </button>
+        </div>
       </div>
     );
   }
