@@ -3,13 +3,14 @@
 import { useState } from "react";
 import AssessmentForm from "@/components/AssessmentForm";
 import ResultsPanel from "@/components/ResultsPanel";
-import { mockPredict } from "@/lib/mockPredict";
+import { predict } from "@/lib/predict";
 import { FormValues, PredictionResponse } from "@/lib/types";
 
 export default function Home() {
   const [values, setValues] = useState<FormValues>({});
   const [result, setResult] = useState<PredictionResponse | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   function handleChange(key: string, value: FormValues[string]) {
     setValues((prev) => ({ ...prev, [key]: value }));
@@ -18,9 +19,14 @@ export default function Home() {
   async function handleSubmit() {
     setIsSubmitting(true);
     setResult(null);
+    setError(null);
     try {
-      const prediction = await mockPredict(values);
+      const prediction = await predict(values);
       setResult(prediction);
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : "Unable to get a prediction.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -47,6 +53,11 @@ export default function Home() {
             onSubmit={handleSubmit}
             isSubmitting={isSubmitting}
           />
+          {error && (
+            <p role="alert" className="mt-4 text-sm text-destructive">
+              {error}
+            </p>
+          )}
         </section>
 
         <aside className="lg:sticky lg:top-10 self-start">

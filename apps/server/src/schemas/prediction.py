@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from schemas.patient import CivilStatus, Occupation, TypeOfSugar, DMFTData
+from src.schemas.patient import CivilStatus, Occupation, TypeOfSugar, DMFTData
 
 # TODO: Consider extracting the feature lists into a separate file to avoid duplication between this file and the notebook. The lists must match exactly, so it would be better to have a single source of truth.
 # Single source of truth — must match ml/notebooks binary_cols/categorical_cols/

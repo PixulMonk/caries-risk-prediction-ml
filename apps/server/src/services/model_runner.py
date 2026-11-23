@@ -1,6 +1,6 @@
 import pandas as pd
 
-from schemas.prediction import (
+from src.schemas.prediction import (
     PredictionRequest,
     PredictionResponse,
     FeatureContribution,
