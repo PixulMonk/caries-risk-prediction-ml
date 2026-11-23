@@ -28,11 +28,13 @@ states, Radix-driven Select/Checkbox instead of raw HTML controls).
   `mock_caries_data_v5.csv` and the GPA form sections (A–D). Edit this file
   when the feature set changes; the form re-renders automatically since it's
   looped from this config, not hardcoded.
-- **`lib/mockPredict.ts`** — a heuristic stand-in for the trained model.
-  Its return shape (`PredictionResponse` in `lib/types.ts`) is what the real
-  `POST /predict` on `apps/server` should return. When that endpoint exists,
-  replace the body of `mockPredict()` with a `fetch()` call — no other file
-  needs to change.
+- **`lib/mockPredict.ts`** — a heuristic stand-in for the trained model,
+  retained as a separate prediction path for future comparison with model
+  output.
+- **`lib/predict.ts`** — maps form values to the backend `POST /api/v1/predict`
+  request and adapts the server response to the UI's `PredictionResponse`.
+  Configure `NEXT_PUBLIC_API_BASE_URL` when the API is not at
+  `http://localhost:8000`.
 - **Medications** — rendered as individual checkboxes (`MEDICATION_CLASSES`
   in `formSchema.ts`), matching the CSV's per-drug-class columns. Free-text
   entry + auto-classification is a planned later version, not built here.
