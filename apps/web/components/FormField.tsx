@@ -79,7 +79,7 @@ export default function FormField({ field, values, onChange }: Props) {
           {field.required && <span className="text-destructive"> *</span>}
         </Label>
         <Select
-          value={value === undefined ? undefined : String(value)}
+          value={value === undefined || value === null ? "" : String(value)}
           onValueChange={(raw) => {
             const opt = field.options?.find((o) => String(o.value) === raw);
             onChange(field.key, opt ? opt.value : raw);

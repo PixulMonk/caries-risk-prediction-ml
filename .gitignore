@@ -253,3 +253,5 @@ pyrightconfig.json
 !.env.example
 
 # End of https://www.toptal.com/developers/gitignore/api/python
+# TypeScript incremental build info
+*.tsbuildinfo
